@@ -1,11 +1,11 @@
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useTaskStore } from '~/stores/task.store'
 import type { CreateTaskPayload } from '~/types/task.types'
 const taskStore = useTaskStore()
-const { tasks, loading, error, filteredTasks, taskCount } = storeToRefs(taskStore)
+const {loading, error, filteredTasks, taskCount } = storeToRefs(taskStore)
 const showForm = ref(false)
 
 onMounted(() => {
@@ -57,13 +57,16 @@ async function handleCreateTask(payload: CreateTaskPayload) {
       </div>
       <div v-else class="overflow-x-auto">
         <table class="w-full table-auto">
+          <caption class="sr-only">Tasks table</caption>
           <thead class="bg-slate-50 text-left text-sm font-medium text-slate-700">
-            <task-table-header :data="['ID', 'Title', 'Description', 'Status', 'Created At', 'Updated At']" />
+            <task-table-header :data="['ID', 'Title', 'Description', 'Status', 'Created At', 'Action']" />
           </thead>
           <tbody>
-            <tr v-for="task in filteredTasks" :key="task.id" class="border-t last:border-b hover:bg-slate-50">
-              <task-item :task="task" />
-            </tr>
+            <task-item
+              v-for="task in filteredTasks"
+              :key="task.id"
+              :task="task"
+            />
           </tbody>
         </table>
         <div v-if="filteredTasks.length === 0" class="mt-6 text-center text-sm text-slate-500">

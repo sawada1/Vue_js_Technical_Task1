@@ -7,12 +7,6 @@ const clearError = (field: string) => {
   }
 }
 
-const getMinDate = () => {
-  const tomorrow = new Date()
-  tomorrow.setDate(tomorrow.getDate() + 1)
-  return tomorrow.toISOString().split('T')[0]
-}
-
 const validate = () => {
   errors.value = {}
 
@@ -45,7 +39,6 @@ const validate = () => {
   return {
     errors: errors,
     validate: validate,
-    getMinDate: getMinDate,
     clearError: clearError,
   }
 }

@@ -1,11 +1,14 @@
 <script setup lang="ts">
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   modelValue: string;
   label: string;
   placeholder: string;
   error: string;
   rows: number;
-}>();
+  id?: string;
+}>(), {
+  id: undefined
+});
 const emit = defineEmits<{
   (e: "update:modelValue", value: string): void;
   (e: "clear-error"): void;
@@ -21,10 +24,11 @@ const onInput = (event: Event) => {
 
 <template>
   <div>
-    <label class="block text-sm font-medium text-slate-700 mb-1"
+    <label :for="id" class="block text-sm font-medium text-slate-700 mb-1"
       >{{ label }} *</label
     >
     <textarea
+      :id="id"
       :value="modelValue"
       @input="onInput"
       :rows="rows"

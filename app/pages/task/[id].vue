@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from "vue";
-import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
+import { useRoute } from "vue-router";
 import { useTaskStore } from "~/stores/task.store";
 import { useTaskHelpers } from "~/composables/useTaskHelpers";
 import type { Task , UpdateTaskPayload } from "~/types/task.types";
@@ -13,19 +13,28 @@ const { error, loading } = storeToRefs(taskStore);
 const task = computed(() => taskStore.currentTask);
 const showEditForm = ref(false);
 
+const taskTitle = computed(() => task.value?.title ?? "Task Details");
+const taskDescription = computed(
+  () => task.value?.description ?? "No description provided."
+);
+
 async function handleEditTask(payload: UpdateTaskPayload) {
   await taskStore.updateTask(task.value!.id, payload);
   showEditForm.value = false;
 }
-useHead({
-  title: task.value?.title ?? "Task Details",
+
+useHead(() => ({
+  title: taskTitle.value,
   meta: [
     {
       name: "description",
-      content: task.value?.description ?? "No description provided.",
+      content: taskDescription.value,
     },
+    { property: "og:title", content: taskTitle.value },
+    { property: "og:description", content: taskDescription.value },
+    { property: "twitter:card", content: "summary_large_image" },
   ],
-});
+}));
 
 const handleComplete = async () => {
   await taskStore.updateTask(task.value!.id, {

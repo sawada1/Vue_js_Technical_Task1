@@ -25,14 +25,17 @@ watch(statusFilter, (value) => {
             <input
               v-model="searchQuery"
               type="text"
+              aria-label="Search tasks"
               placeholder="Search by title..."
               class="w-full pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"
             />
           </div>
         </div>
         <div class="sm:w-48">
+          <label class="sr-only" for="status-filter">Filter by status</label>
           <select
-          aria-label="Status"
+            id="status-filter"
+            aria-label="Filter tasks by status"
             v-model="statusFilter"
             class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"
           >

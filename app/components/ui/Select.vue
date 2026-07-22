@@ -1,9 +1,12 @@
 <script setup lang="ts">
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   modelValue: string;
   label: string;
   error: string;
-}>();
+  id?: string;
+}>(), {
+  id: undefined
+});
 
 const emit = defineEmits<{
   (e: "update:modelValue", value: string): void;
@@ -13,10 +16,11 @@ const emit = defineEmits<{
 
 <template>
   <div>
-    <label class="block text-sm font-medium text-slate-700 mb-1"
+    <label :for="id" class="block text-sm font-medium text-slate-700 mb-1"
       >{{ label }} *</label
     >
     <select
+      :id="id"
       :value="modelValue"
       @change="emit('update:modelValue', ($event.target as HTMLSelectElement).value)"
       class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"

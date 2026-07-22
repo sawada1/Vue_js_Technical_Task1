@@ -3,7 +3,10 @@
 useHead({
   title: 'Task Manager',
   meta: [
-    { name: 'description', content: 'A simple task manager application' }
+    { name: 'description', content: 'A simple task manager application' },
+    { property: 'og:title', content: 'Task Manager | TaskFlow' },
+    { property: 'og:description', content: 'A simple task manager application' },
+    { property: 'twitter:card', content: 'summary_large_image' }
   ]
 })
 </script>

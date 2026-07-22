@@ -8,13 +8,15 @@ const props = withDefaults(
     type?: string
     disabled?: boolean
     required?: boolean
+    id?: string
   }>(),
   {
     type: 'text',
     disabled: false,
     required: true,
     placeholder: 'Enter value',
-    error: ''
+    error: '',
+    id: undefined
   }
 )
 const emit = defineEmits<{
@@ -38,10 +40,11 @@ const getMinDate = () => {
 
 <template>
   <div>
-    <label class="block text-sm font-medium text-slate-700 mb-1"
+    <label :for="id" class="block text-sm font-medium text-slate-700 mb-1"
       >{{ label }} *</label
     >
     <input
+      :id="id"
       :value="modelValue"
       @input="onInput"
       :type="type"

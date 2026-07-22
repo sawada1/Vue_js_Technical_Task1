@@ -55,14 +55,18 @@ const handleCancel = () => {
   >
     <div
       @click.stop
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="task-modal-title"
+      aria-describedby="task-modal-description"
       class="bg-white rounded-2xl shadow-soft max-w-lg w-full max-h-[90vh] overflow-y-auto"
     >
       <div class="p-6">
         <div class="mb-6">
-          <h2 class="text-xl font-bold text-slate-900">
+          <h2 id="task-modal-title" class="text-xl font-bold text-slate-900">
             {{ mode === "create" ? "Create New Task" : "Edit Task" }}
           </h2>
-          <p class="mt-1 text-sm text-slate-600">
+          <p id="task-modal-description" class="mt-1 text-sm text-slate-600">
             {{
               mode === "create"
                 ? "Fill in the details below to create a new task."
@@ -76,6 +80,7 @@ const handleCancel = () => {
             v-model="formData.title"
             @input="clearError('title')"
             type="text"
+            id="task-title"
             label="Title"
             placeholder="Enter task title"
             :error="errors.title || ''"
@@ -84,6 +89,7 @@ const handleCancel = () => {
             v-model="formData.description"
             @input="clearError('description')"
             :rows="3"
+            id="task-description"
             label="Description"
             placeholder="Enter task description"
             :error="errors.description || ''"
@@ -92,6 +98,7 @@ const handleCancel = () => {
             v-model="formData.status"
             @input="clearError('status')"
             label="Status"
+            id="task-status"
             :error="errors.status || ''"
           />
           <ui-input
@@ -99,6 +106,7 @@ const handleCancel = () => {
             @input="clearError('dueDate')"
             type="date"
             label="Due Date"
+            id="task-date"
             placeholder="Enter task date"
             :error="errors.dueDate || ''"
           />

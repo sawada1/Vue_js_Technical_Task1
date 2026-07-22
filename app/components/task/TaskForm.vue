@@ -50,7 +50,7 @@ const handleCancel = () => {
 <template>
   <div
     @click="handleCancel"
-    class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+    class="fixed inset-0 bg-black/50 flex items-center justify-center z-[100] p-4"
   >
     <div
       @click.stop

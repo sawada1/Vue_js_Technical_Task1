@@ -26,7 +26,7 @@ const formData = ref({
   title: props.task?.title || "",
   description: props.task?.description || "",
   status: props.task?.status || "Pending",
-  dueDate: props.task?.dueDate || "",
+  createdAt: props.task?.createdAt || "",
 });
 
 const { errors, validate, clearError } = useValidation(formData);
@@ -101,13 +101,13 @@ const handleCancel = () => {
             :error="errors.status || ''"
           />
           <ui-input
-            v-model="formData.dueDate"
-            @input="clearError('dueDate')"
+            v-model="formData.createdAt"
+            @input="clearError('createdAt')"
             type="date"
             label="Due Date"
             id="task-date"
             placeholder="Enter task date"
-            :error="errors.dueDate || ''"
+            :error="errors.createdAt || ''"
           />
 
           <div class="flex gap-3 pt-4">

@@ -4,7 +4,6 @@ export interface Task {
   title: string
   description: string
   status: TaskStatus
-  dueDate: string | null
   createdAt: string
   updatedAt: string
 }
@@ -17,7 +16,7 @@ export interface CreateTaskPayload {
   title: string
   description: string
   status: TaskStatus
-  dueDate: string | null
+  createdAt: string | null
 }
 
 
@@ -25,7 +24,7 @@ export interface UpdateTaskPayload {
   title?: string
   description?: string
   status?: TaskStatus
-  dueDate?: string | null
+  createdAt?: string | null
 }
 
 

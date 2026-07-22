@@ -5,9 +5,7 @@ export function useTaskHelpers() {
     if (!date) return '-'
 
   return new Intl.DateTimeFormat('en-GB', {
-    dateStyle: 'short',
-    timeStyle: 'medium',
-    timeZone: 'UTC'
+    dateStyle: 'short'
   }).format(new Date(date))
   }
 
@@ -23,7 +21,7 @@ export function useTaskHelpers() {
 
   function handleSubmitForm(
     mode: 'create' | 'edit',
-    formData: { title: string; description: string; status: TaskStatus; dueDate: string },
+    formData: { title: string; description: string; status: TaskStatus; createdAt: string },
     validate: () => boolean,
     onSubmit: (payload: CreateTaskPayload) => void
   ) {
@@ -35,7 +33,7 @@ export function useTaskHelpers() {
       title: formData.title,
       description: formData.description,
       status: formData.status,
-      dueDate: formData.dueDate || null
+      createdAt: formData.createdAt || null
     })
 
     return true

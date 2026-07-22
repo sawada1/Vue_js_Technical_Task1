@@ -11,7 +11,6 @@ vi.mock('~/repositories', () => ({
           title: 'Test task',
           description: 'A task for testing',
           status: 'Pending',
-          dueDate: null,
           createdAt: '2026-01-01T00:00:00Z',
           updatedAt: '2026-01-01T00:00:00Z'
         }
@@ -21,7 +20,6 @@ vi.mock('~/repositories', () => ({
         title: 'Test task',
         description: 'A task for testing',
         status: 'Pending',
-        dueDate: null,
         createdAt: '2026-01-01T00:00:00Z',
         updatedAt: '2026-01-01T00:00:00Z'
       }),
@@ -30,7 +28,6 @@ vi.mock('~/repositories', () => ({
         title: 'New task',
         description: 'Created by test',
         status: 'Pending',
-        dueDate: null,
         createdAt: '2026-01-01T00:00:00Z',
         updatedAt: '2026-01-01T00:00:00Z'
       }),
@@ -39,7 +36,6 @@ vi.mock('~/repositories', () => ({
         title: 'Test task updated',
         description: 'Updated by test',
         status: 'Done',
-        dueDate: null,
         createdAt: '2026-01-01T00:00:00Z',
         updatedAt: '2026-01-01T00:00:00Z'
       }),

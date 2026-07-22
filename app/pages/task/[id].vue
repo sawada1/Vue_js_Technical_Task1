@@ -38,7 +38,7 @@ onMounted(async () => {
 });
 </script>
 
-<template>
+<template >
   <main class="container mx-auto min-h-screen bg-slate-50 px-6 py-10">
     <div v-if="loading" class="flex items-center justify-center py-20">
       <feedback-loading-state />

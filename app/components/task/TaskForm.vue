@@ -20,7 +20,7 @@ const emit = defineEmits<{
 const formData = ref({
   title: props.task?.title || "",
   description: props.task?.description || "",
-  status: props.task?.status || "pending",
+  status: props.task?.status || "Pending",
   dueDate: props.task?.dueDate || "",
 });
 

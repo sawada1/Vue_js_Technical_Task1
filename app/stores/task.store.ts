@@ -38,9 +38,9 @@ export const useTaskStore = defineStore('task', () => {
   })
 
   // Actions
-  async function fetchTasks() {
+  async function fetchTasks(refetch:boolean = false) {
     error.value = null
-    if(tasks.value.length > 0) {
+    if(tasks.value.length > 0 && !refetch) {
       return
     }
     try {
@@ -54,10 +54,10 @@ export const useTaskStore = defineStore('task', () => {
     }
   }
 
-  async function fetchTask(id: string) {
+  async function fetchTask(id: number) {
     error.value = null
     try {
-      const task = await taskRepository.getById(Number(id))
+      const task = await taskRepository.getById(id)
       currentTask.value = task
       return task
     } catch (err) {
@@ -84,11 +84,12 @@ export const useTaskStore = defineStore('task', () => {
     }
   }
 
-  async function updateTask(id: string, payload: UpdateTaskPayload) {
+  async function updateTask(id: number, payload: UpdateTaskPayload) {
     loading.value = true
     error.value = null
     try {
-      const updatedTask = await taskRepository.update(Number(id), payload)
+      const updatedTask = await taskRepository.update(id, payload)
+      tasks.value = tasks.value.map(t => t.id === id ? updatedTask : t);
       currentTask.value = updatedTask
       notifier.success('Task updated successfully')
     } catch (err) {
@@ -100,11 +101,11 @@ export const useTaskStore = defineStore('task', () => {
     }
   }
 
-  async function deleteTask(id: string) {
+  async function deleteTask(id: number) {
     loading.value = true
     error.value = null
     try {
-      await taskRepository.delete(Number(id))
+      await taskRepository.delete(id)
       tasks.value = tasks.value.filter(task => task.id !== id)
       notifier.success('Task deleted successfully')
     } catch (err) {

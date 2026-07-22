@@ -4,18 +4,16 @@ import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useTaskStore } from "~/stores/task.store";
 import { useTaskHelpers } from "~/composables/useTaskHelpers";
-import type { Task } from "~/types/task";
-import type { EditTaskPayload } from "~/types/task";
+import type { Task , UpdateTaskPayload } from "~/types/task.types";
 
 const route = useRoute();
 const taskStore = useTaskStore();
 const { formatDate, statusClass } = useTaskHelpers();
 const { error, loading } = storeToRefs(taskStore);
-const taskId = computed(() => route.params.id as string);
 const task = computed(() => taskStore.currentTask);
 const showEditForm = ref(false);
 
-async function handleEditTask(payload: EditTaskPayload) {
+async function handleEditTask(payload: UpdateTaskPayload) {
   await taskStore.updateTask(task.value!.id, payload);
   showEditForm.value = false;
 }
@@ -31,7 +29,7 @@ useHead({
 
 const handleComplete = async () => {
   await taskStore.updateTask(task.value!.id, {
-    status: "done",
+    status: "Done",
   });
 };
 
@@ -119,15 +117,15 @@ onMounted(async () => {
           </button>
           <button
             @click="handleComplete"
-            :disabled="task?.status === 'done'"
+            :disabled="task?.status === 'Done'"
             class="px-4 py-2 border rounded-lg transition-colors font-medium"
             :class="[
-              task?.status === 'done'
+              task?.status === 'Done'
                 ? 'bg-green-500 text-white border-green-500 cursor-not-allowed opacity-50'
                 : 'border-slate-300 text-slate-700 hover:bg-slate-50',
             ]"
           >
-            {{ task?.status === "done" ? "Completed" : "Mark as Complete" }}
+            {{ task?.status === "Done" ? "Completed" : "Mark as Complete" }}
           </button>
         </div>
       </div>

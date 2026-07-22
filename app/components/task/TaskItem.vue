@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { Task } from '~/types/task.types'
+import type { Task , UpdateTaskPayload } from '~/types/task.types'
 import { useTaskStore } from '~/stores/task.store'
 import { useTaskHelpers } from '~/composables/useTaskHelpers'
 
@@ -22,19 +22,12 @@ function cancelDelete() {
   showDeleteModal.value = false
 }
 
-function editTask(id: string) {
-  taskStore.editTask(id)
-}
-
-function completeTask(id: string) {
-  taskStore.completeTask(id)
-}
 const showEditForm = ref(false)
 
-async function handleEditTask(payload: CreateTaskPayload) {
+async function handleEditTask(payload: UpdateTaskPayload) {
   await taskStore.updateTask(props.task.id, payload)
   showEditForm.value = false
-  await fetchTasks()
+  await taskStore.fetchTasks(true)
 }
 </script>
 

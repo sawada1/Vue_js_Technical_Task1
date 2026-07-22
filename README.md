@@ -2,6 +2,8 @@
 
 A Nuxt 4 + Vue 3 task management application built with Pinia and a repository pattern for clean data access. This project includes modern testing with Vitest, decoupled store logic, and reusable repository abstractions.
 
+**Live demo:** https://vue-js-technical-task1.vercel.app/
+
 ---
 
 ## Project Overview

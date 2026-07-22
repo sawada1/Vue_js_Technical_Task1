@@ -1,60 +1,74 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import type { CreateTaskPayload, Task } from '~/types/task.types'
+import { ref, computed } from "vue";
+import type { CreateTaskPayload, Task } from "~/types/task.types";
 
 interface Props {
-  task?: Task | null
-  mode?: 'create' | 'edit'
+  task?: Task | null;
+  mode?: "create" | "edit";
 }
 
 const props = withDefaults(defineProps<Props>(), {
   task: null,
-  mode: 'create'
-})
+  mode: "create",
+});
 
 const emit = defineEmits<{
-  submit: [payload: CreateTaskPayload]
-  cancel: []
-}>()
+  submit: [payload: CreateTaskPayload];
+  cancel: [];
+}>();
 
 const formData = ref({
-  title: props.task?.title || '',
-  description: props.task?.description || '',
-  status: props.task?.status || 'Pending',
-  dueDate: props.task?.dueDate || ''
-})
+  title: props.task?.title || "",
+  description: props.task?.description || "",
+  status: props.task?.status || "pending",
+  dueDate: props.task?.dueDate || "",
+});
 
-const { errors, validate , clearError } = useValidation(formData)
+const { errors, validate, clearError } = useValidation(formData);
 
-const isSubmitting = ref(false)
+const isSubmitting = ref(false);
 
 const handleSubmit = (e: Event) => {
-  e.preventDefault()
+  e.preventDefault();
   if (validate()) {
-    isSubmitting.value = true
+    isSubmitting.value = true;
     const payload: CreateTaskPayload = {
       title: formData.value.title,
       description: formData.value.description,
       status: formData.value.status,
-      dueDate: formData.value.dueDate || null
-    }
-    emit('submit', payload)
+      dueDate: formData.value.dueDate || null,
+    };
+    emit("submit", payload);
   }
-  isSubmitting.value = false
-}
+  isSubmitting.value = false;
+};
 
 const handleCancel = () => {
-  emit('cancel')
-}
+  emit("cancel");
+};
 </script>
 
 <template>
-  <div @click="handleCancel" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-    <div @click.stop class="bg-white rounded-2xl shadow-soft max-w-lg w-full max-h-[90vh] overflow-y-auto">
+  <div
+    @click="handleCancel"
+    class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+  >
+    <div
+      @click.stop
+      class="bg-white rounded-2xl shadow-soft max-w-lg w-full max-h-[90vh] overflow-y-auto"
+    >
       <div class="p-6">
         <div class="mb-6">
-          <h2 class="text-xl font-bold text-slate-900">{{ mode === 'create' ? 'Create New Task' : 'Edit Task' }}</h2>
-          <p class="mt-1 text-sm text-slate-600">{{ mode === 'create' ? 'Fill in the details below to create a new task.' : 'Update the task details.' }}</p>
+          <h2 class="text-xl font-bold text-slate-900">
+            {{ mode === "create" ? "Create New Task" : "Edit Task" }}
+          </h2>
+          <p class="mt-1 text-sm text-slate-600">
+            {{
+              mode === "create"
+                ? "Fill in the details below to create a new task."
+                : "Update the task details."
+            }}
+          </p>
         </div>
 
         <form @submit="handleSubmit" class="space-y-4">
@@ -74,7 +88,6 @@ const handleCancel = () => {
             placeholder="Enter task description"
             :error="errors.description || ''"
           />
-          {{formData.status}}
           <ui-select
             v-model="formData.status"
             @input="clearError('status')"
@@ -86,6 +99,7 @@ const handleCancel = () => {
             @input="clearError('dueDate')"
             type="date"
             label="Due Date"
+            placeholder="Enter task date"
             :error="errors.dueDate || ''"
           />
 
@@ -102,7 +116,7 @@ const handleCancel = () => {
               type="submit"
               class="flex items-center justify-center gap-2 flex-1 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-500 transition-colors"
             >
-              {{ mode === 'create' ? 'Create Task' : 'Update Task' }}
+              {{ mode === "create" ? "Create Task" : "Update Task" }}
               <ui-loading-spinner v-if="isSubmitting" size="sm" />
             </button>
           </div>

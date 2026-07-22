@@ -59,7 +59,7 @@ async function handleCreateTask(payload: CreateTaskPayload) {
         <table class="w-full table-auto">
           <caption class="sr-only">Tasks table</caption>
           <thead class="bg-slate-50 text-left text-sm font-medium text-slate-700">
-            <task-table-header :data="['ID', 'Title', 'Description', 'Status', 'Created At', 'Action']" />
+            <task-table-header :data="['ID', 'Title', 'Description', 'Status', 'Created At', 'Actions']" />
           </thead>
           <tbody>
             <task-item

@@ -1,21 +1,26 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
+import { useTaskHelpers } from "~/composables/useTaskHelpers";
 import type { CreateTaskPayload, Task } from "~/types/task.types";
 
 interface Props {
   task?: Task | null;
   mode?: "create" | "edit";
+  loading?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   task: null,
   mode: "create",
+  loading: false,
 });
 
 const emit = defineEmits<{
   submit: [payload: CreateTaskPayload];
   cancel: [];
 }>();
+
+const { handleSubmitForm } = useTaskHelpers();
 
 const formData = ref({
   title: props.task?.title || "",
@@ -27,18 +32,12 @@ const formData = ref({
 const { errors, validate, clearError } = useValidation(formData);
 
 const isSubmitting = ref(false);
+const isBusy = computed(() => props.loading || isSubmitting.value);
 
 const handleSubmit = (e: Event) => {
   e.preventDefault();
-  if (validate()) {
+  if (handleSubmitForm(props.mode!, formData.value, validate, (payload) => emit("submit", payload))) {
     isSubmitting.value = true;
-    const payload: CreateTaskPayload = {
-      title: formData.value.title,
-      description: formData.value.description,
-      status: formData.value.status,
-      dueDate: formData.value.dueDate || null,
-    };
-    emit("submit", payload);
   }
   isSubmitting.value = false;
 };
@@ -122,10 +121,11 @@ const handleCancel = () => {
             </button>
             <button
               type="submit"
-              class="flex items-center justify-center gap-2 flex-1 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-500 transition-colors"
+              :disabled="isBusy"
+              class="flex items-center justify-center gap-2 flex-1 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-500 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
             >
               {{ mode === "create" ? "Create Task" : "Update Task" }}
-              <ui-loading-spinner v-if="isSubmitting" size="sm" />
+              <ui-loading-spinner v-if="isBusy" size="sm" />
             </button>
           </div>
         </form>

@@ -24,11 +24,19 @@ const emit = defineEmits<{
   (e: "clear-error"): void;
 }>();
 
+const inputRef = ref<HTMLInputElement | null>(null);
+
 const onInput = (event: Event) => {
   const value = (event.target as HTMLInputElement).value;
 
   emit("update:modelValue", value);
   emit("clear-error");
+};
+
+const onFocus = () => {
+  if (props.type === "date" && inputRef.value?.showPicker) {
+    inputRef.value.showPicker();
+  }
 };
 
 const getMinDate = () => {
@@ -44,9 +52,11 @@ const getMinDate = () => {
       >{{ label }} *</label
     >
     <input
+      ref="inputRef"
       :id="id"
       :value="modelValue"
       @input="onInput"
+      @focus="onFocus"
       :type="type"
       :min="type === 'date' ? getMinDate() : undefined"
       class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"

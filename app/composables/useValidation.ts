@@ -25,9 +25,10 @@ const validate = () => {
   if (!formData.value.dueDate) {
     errors.value.dueDate = 'Due date is required'
   } else {
-    const dueDate = new Date(formData.value.dueDate)
+    const dueDate = new Date(`${formData.value.dueDate}T00:00:00`)
     const today = new Date()
     today.setHours(0, 0, 0, 0)
+    dueDate.setHours(0, 0, 0, 0)
 
     if (dueDate <= today) {
       errors.value.dueDate = 'Due date must be in the future'

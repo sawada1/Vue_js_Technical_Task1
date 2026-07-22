@@ -1,3 +1,5 @@
+import type { CreateTaskPayload , TaskStatus } from '~/types/task.types'
+
 export function useTaskHelpers() {
   function formatDate(date?: string) {
     if (!date) return '-'
@@ -19,8 +21,29 @@ export function useTaskHelpers() {
     return 'bg-slate-500'
   }
 
+  function handleSubmitForm(
+    mode: 'create' | 'edit',
+    formData: { title: string; description: string; status: TaskStatus; dueDate: string },
+    validate: () => boolean,
+    onSubmit: (payload: CreateTaskPayload) => void
+  ) {
+    if (!validate()) {
+      return false
+    }
+
+    onSubmit({
+      title: formData.title,
+      description: formData.description,
+      status: formData.status,
+      dueDate: formData.dueDate || null
+    })
+
+    return true
+  }
+
   return {
     formatDate,
-    statusClass
+    statusClass,
+    handleSubmitForm
   }
 }

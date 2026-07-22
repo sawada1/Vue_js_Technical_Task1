@@ -23,11 +23,10 @@ function cancelDelete() {
 }
 
 const showEditForm = ref(false)
-
 async function handleEditTask(payload: UpdateTaskPayload) {
   await taskStore.updateTask(props.task.id, payload)
   showEditForm.value = false
-  await taskStore.fetchTasks(true)
+  await taskStore.fetchTasks(true)  
 }
 </script>
 

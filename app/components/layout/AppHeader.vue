@@ -1,6 +1,3 @@
-<script setup lang="ts">
-const isMenuOpen = ref(false)
-</script>
 
 <template>
   <header class="bg-white border-b border-slate-200 shadow-soft sticky top-0 z-50">

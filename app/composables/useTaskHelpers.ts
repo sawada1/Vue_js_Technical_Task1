@@ -4,9 +4,14 @@ export function useTaskHelpers() {
   function formatDate(date?: string) {
     if (!date) return '-'
 
-  return new Intl.DateTimeFormat('en-GB', {
-    dateStyle: 'short'
-  }).format(new Date(date))
+    const d = new Date(date)
+    const year = d.getFullYear()
+    const month = String(d.getMonth() + 1).padStart(2, '0')
+    const day = String(d.getDate()).padStart(2, '0')
+    const hours = String(d.getHours()).padStart(2, '0')
+    const minutes = String(d.getMinutes()).padStart(2, '0')
+
+    return `${year}-${month}-${day} ${hours}:${minutes}`
   }
 
   function statusClass(status: string) {
@@ -21,7 +26,7 @@ export function useTaskHelpers() {
 
   function handleSubmitForm(
     mode: 'create' | 'edit',
-    formData: { title: string; description: string; status: TaskStatus; createdAt: string },
+    formData: { title: string; description: string; status: TaskStatus; dueDate: string },
     validate: () => boolean,
     onSubmit: (payload: CreateTaskPayload) => void
   ) {
@@ -33,7 +38,7 @@ export function useTaskHelpers() {
       title: formData.title,
       description: formData.description,
       status: formData.status,
-      createdAt: formData.createdAt || null
+      dueDate: formData.dueDate
     })
 
     return true

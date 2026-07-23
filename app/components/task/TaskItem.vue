@@ -51,6 +51,9 @@ async function handleEditTask(payload: UpdateTaskPayload) {
       >
     </td>
     <td class="px-4 py-3 text-sm text-slate-500">
+      {{ formatDate(task.dueDate) }}
+    </td>
+    <td class="px-4 py-3 text-sm text-slate-500">
       {{ formatDate(task.createdAt) }}
     </td>
     <td class="px-4 py-3 text-sm flex gap-2">

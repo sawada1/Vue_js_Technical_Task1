@@ -98,6 +98,7 @@ async function handleCreateTask(payload: CreateTaskPayload) {
               'Title',
               'Description',
               'Status',
+              'Due Date',
               'Created At',
               'Actions',
             ]"

@@ -112,9 +112,9 @@ onMounted(async () => {
             <p class="text-slate-800">{{ formatDate(task?.createdAt) }}</p>
           </div>
 
-          <div v-if="task?.createdAt">
+          <div v-if="task?.dueDate">
             <p class="text-sm font-medium text-slate-500 mb-1">Due Date</p>
-            <p class="text-slate-800">{{ formatDate(task?.createdAt) }}</p>
+            <p class="text-slate-800">{{ formatDate(task?.dueDate) }}</p>
           </div>
         </div>
         <div class="mt-8 pt-6 border-t border-slate-200 flex gap-3">
